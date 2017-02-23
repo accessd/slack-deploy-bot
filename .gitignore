@@ -1,0 +1,4 @@
+.slack-api-token
+*.log
+logs
+deploybot.eye
