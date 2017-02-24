@@ -81,20 +81,27 @@ module DeployBot
         git.checkout(branch)
         username = client.users[data.user][:name]
         client.send(:logger).info "user: #{username}"
-        # client.say(channel: :random, text: "#{username} started deploying #{app}##{branch} to #{env}")
+        client.say(channel: data.channel, text: "#{username} started deploying #{app}##{branch} to #{env}")
         cmd = "cd #{app_config[:path]}; #{app_config[:deploy_cmd].call(env, branch)}"
         client.send(:logger).info "command: #{cmd}"
 
+        error_happened = false
         Utils::Subprocess.new(cmd) do |stdout, stderr, thread|
           if stdout && !stdout.empty?
             client.send(:logger).info stdout
-            client.say(channel: data.channel, text: "Failed: #{stdout}") if stdout =~ /failed\:/
+            if stdout =~ /failed\:/
+              error_happened = true
+              say_error(client, data, "Deploy failed with error: #{stdout}. More info at logs/deploybot.log")
+            end
+          elsif stderr && !stderr.empty?
+            client.send(:logger).error stderr
+            error_happened = true
+            say_error(client, data, "Deploy failed with error: #{stderr}. More info at logs/deploybot.log")
           end
+        end
 
-          # if stderr && !stderr.empty?
-          # client.send(:logger).error stderr
-          # say_error(channel, data, stderr)
-          # end
+        unless error_happened
+          client.say(channel: data.channel, text: "#{username} finished deploying #{app}##{branch} to #{env}")
         end
       end
     end

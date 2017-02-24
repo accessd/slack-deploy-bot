@@ -18,9 +18,15 @@ Deploy your apps to different environments:
 
     deploy my-awesome-app to prod
 
-or
+![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-command.png)
+
+or specific branch:
 
     deploy my-awesome-app#feature to staging
+
+in case of deploy failed you'll see error message:
+
+![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-failed.png)
 
 ## Configuration
 
@@ -79,5 +85,6 @@ Info for bot process:
 ## TODO
 
 ~~1. Configuration (apps, envs, default branch, deploy command)~~
+
 2. Notifications to channel about starting/ending/failing deploy events
 3. Specs
