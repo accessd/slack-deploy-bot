@@ -4,9 +4,11 @@ Slack bot that helps you deploy your apps.
 
 ## What it can do?
 
+For help just type **help**:
+
 Show changelog for your branch against master branch:
 
-    changelog my-branch
+    changelog my-awesome-app#feature
 
 Deploy your apps to different environments:
 
@@ -14,13 +16,36 @@ Deploy your apps to different environments:
 
 or
 
-    deploy my-awesome-app#develop to staging
+    deploy my-awesome-app#feature to staging
+
+## Configuration
+
+Copy *config/settings.sample.yml* to *config/settings.yml* for production or to *config/settings.local.yml* for
+development.
+
+Example:
+
+```yaml
+envs:
+  - staging
+  - prod
+apps:
+  my-awesome-app: '~/projects/my-awesome-app' # app name with path to it
+default_branch: master # default branch to deploy, is not required
+deploy_cmd: ./deploy.sh
+```
+
+Required options: envs, apps, deploy_cmd
 
 ## Development
 
 Start bot with command:
 
-    SLACK_API_TOKEN=xxx BASE_PATH=codebasepath bundle exec ruby deploybot.rb
+    SLACK_API_TOKEN=xxx bundle exec ruby deploybot.rb
+
+Start console with:
+
+    bundle exec ./console
 
 ## Production
 
