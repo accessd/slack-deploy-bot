@@ -2,3 +2,5 @@
 *.log
 logs
 deploybot.eye
+config/settings.yml
+config/settings.local.yml

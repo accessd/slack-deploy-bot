@@ -1,13 +1,24 @@
 require 'slack-ruby-bot'
 require_relative 'helpers'
 require 'pry'
+require 'config'
+
+Config.setup do |config|
+  config.schema do
+    required(:deploy_cmd).filled
+    required(:envs).filled
+    required(:apps).filled
+  end
+end
+
+Config.load_and_set_settings(Config.setting_files(File.dirname(__FILE__) + '/config', ''))
 
 class DeployBot < SlackRubyBot::Bot
-  ENVS = %w(staging prod).freeze
-  APPS = %w(app).freeze
+  ENVS = Settings.envs
+  APPS = Settings.apps.keys
   MASTER_BRANCH = 'master'.freeze
   EMPTY_CHANGELOG = 'none'.freeze
-  DEFAULT_BRANCH = MASTER_BRANCH
+  DEFAULT_BRANCH = Settings.default_branch || MASTER_BRANCH
 
   help do
     title 'Deploy Bot'
@@ -26,23 +37,20 @@ class DeployBot < SlackRubyBot::Bot
   class << self
     private
 
-    def base_path
-      ENV['BASE_PATH'] || raise("Base path is not set")
-    end
-
-    def git
-      @git ||= Utils::Git.new(base_path)
-    end
-
     def say_error(client, data, text)
       client.say(channel: data.channel, text: ":warning: #{text}") && throw(:exit)
     end
   end
 
-  match(/changelog (?<branch>.+)$/i) do |client, data, match|
+  match(/changelog (?<app>.+)#(?<branch>.+)$/i) do |client, data, match|
     catch(:exit) do
+      app = match[:app]
       branch = match[:branch]
+      app_base_path = Settings.apps[app.to_sym]
 
+      APPS.include?(app.to_sym)         || say_error(client, data, "Invalid app name `#{app}`, use: #{APPS.join(', ')}")
+
+      git = Utils::Git.new(app_base_path)
       git.fetch_branches                || say_error(client, data, "Cannot fetch repo")
       git.branch_exists?(branch)        || say_error(client, data, "Unknown git branch `#{branch}`")
       git.branch_exists?(MASTER_BRANCH) || say_error(client, data, "Unknown git branch `#{MASTER_BRANCH}`")
@@ -51,7 +59,7 @@ class DeployBot < SlackRubyBot::Bot
 
       changelog = git.changelog(branch, against: MASTER_BRANCH).presence || EMPTY_CHANGELOG
 
-      client.say(channel: data.channel, text: "Changelog `#{branch}`:\n```#{changelog}```")
+      client.say(channel: data.channel, text: "Changelog for `#{branch}`:\n```#{changelog}```")
     end
   end
 

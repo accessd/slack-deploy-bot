@@ -1,0 +1,7 @@
+envs:
+  - staging
+  - prod
+apps:
+  my-awesome-app: '~/projects/my-awesome-app'
+default_branch: master
+deploy_cmd: ./deploy.sh

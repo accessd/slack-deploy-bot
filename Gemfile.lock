@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/railsconfig/config.git
+  revision: fb7d4b8ca6d2cfa63354bcfc93731609492f5960
+  specs:
+    config (1.4.0)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.1.1)
+      dry-validation (~> 0.10.4)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -29,6 +38,34 @@ GEM
       timers (>= 4.1.1)
     coderay (1.1.1)
     concurrent-ruby (1.0.4)
+    deep_merge (1.1.1)
+    dry-configurable (0.6.1)
+      concurrent-ruby (~> 1.0)
+    dry-container (0.6.0)
+      concurrent-ruby (~> 1.0)
+      dry-configurable (~> 0.1, >= 0.1.3)
+    dry-core (0.2.4)
+      concurrent-ruby (~> 1.0)
+    dry-equalizer (0.2.0)
+    dry-logic (0.4.1)
+      dry-container (~> 0.2, >= 0.2.6)
+      dry-core (~> 0.2)
+      dry-equalizer (~> 0.2)
+    dry-types (0.9.4)
+      concurrent-ruby (~> 1.0)
+      dry-configurable (~> 0.1)
+      dry-container (~> 0.3)
+      dry-core (~> 0.2, >= 0.2.1)
+      dry-equalizer (~> 0.2)
+      dry-logic (~> 0.4, >= 0.4.0)
+      inflecto (~> 0.0.0, >= 0.0.2)
+    dry-validation (0.10.5)
+      concurrent-ruby (~> 1.0)
+      dry-configurable (~> 0.1, >= 0.1.3)
+      dry-core (~> 0.2, >= 0.2.1)
+      dry-equalizer (~> 0.2)
+      dry-logic (~> 0.4, >= 0.4.0)
+      dry-types (~> 0.9, >= 0.9.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.11.0.1)
@@ -37,6 +74,7 @@ GEM
     hashie (3.5.4)
     hitimes (1.2.4)
     i18n (0.8.1)
+    inflecto (0.0.2)
     json (2.0.3)
     method_source (0.8.2)
     minitest (5.10.1)
@@ -46,6 +84,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    rb-readline (0.5.4)
     slack-ruby-bot (0.10.1)
       hashie
       slack-ruby-client (>= 0.6.0)
@@ -72,7 +111,9 @@ PLATFORMS
 
 DEPENDENCIES
   celluloid-io
+  config!
   pry
+  rb-readline
   slack-ruby-bot
 
 BUNDLED WITH
