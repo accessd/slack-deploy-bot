@@ -6,9 +6,13 @@ Slack bot that helps you deploy your apps.
 
 For help just type **help**:
 
+![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/help-command.png)
+
 Show changelog for your branch against master branch:
 
     changelog my-awesome-app#feature
+
+![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/changelog-command.png)
 
 Deploy your apps to different environments:
 
