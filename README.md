@@ -40,19 +40,19 @@ DeployBot.setup do |config|
     :'my-awesome-app' => {
       envs: [:staging, :prod],
       path: '~/projects/my-awesome-app',
-      default_branch: :master,
+      default_branch: :master, # default branch to deploy
       deploy_cmd: ->(env, branch) { "./deploy.sh #{env} #{branch}" } # deploy with Ansible for example
     },
     :'my-second-awesome-app': {
       envs: [:dev, :prod],
       path: '~/projects/my-second-awesome-app',
-      deploy_cmd: ->(env, branch) { "BRANCH_NAME=feature bundle exec cap #{env} deploy" } # deploy with Capistrano
+      deploy_cmd: ->(env, branch) { "BRANCH_NAME=#{branch} bundle exec cap #{env} deploy" } # deploy with Capistrano
     }
   }
 end
 ```
 
-Required options for each app: *envs*, *apps*, *deploy_cmd*
+Required options for each app: *envs*, *path*, *deploy_cmd*
 
 ## Development
 
@@ -84,7 +84,6 @@ Info for bot process:
 
 ## TODO
 
-~~1. Configuration (apps, envs, default branch, deploy command)~~
-
-2. Notifications to channel about starting/ending/failing deploy events
+1. ~~Configuration (apps, envs, default branch, deploy command)~~
+2. ~~Notifications to channel about starting/ending/failing deploy events~~
 3. Specs
