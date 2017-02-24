@@ -20,22 +20,29 @@ or
 
 ## Configuration
 
-Copy *config/settings.sample.yml* to *config/settings.yml* for production or to *config/settings.local.yml* for
-development.
+Copy *config/config.sample.rb* to *config/config.rb*
 
 Example:
 
-```yaml
-envs:
-  - staging
-  - prod
-apps:
-  my-awesome-app: '~/projects/my-awesome-app' # app name with path to it
-default_branch: master # default branch to deploy, is not required
-deploy_cmd: ./deploy.sh
+```ruby
+DeployBot.setup do |config|
+  config.apps = {
+    :'my-awesome-app' => {
+      envs: [:staging, :prod],
+      path: '~/projects/my-awesome-app',
+      default_branch: :master,
+      deploy_cmd: ->(env, branch) { "./deploy.sh #{env} #{branch}" } # deploy with Ansible for example
+    },
+    :'my-second-awesome-app': {
+      envs: [:dev, :prod],
+      path: '~/projects/my-second-awesome-app',
+      deploy_cmd: ->(env, branch) { "BRANCH_NAME=feature bundle exec cap #{env} deploy" } # deploy with Capistrano
+    }
+  }
+end
 ```
 
-Required options: envs, apps, deploy_cmd
+Required options for each app: *envs*, *apps*, *deploy_cmd*
 
 ## Development
 
@@ -51,22 +58,22 @@ Start console with:
 
 Put in root .slack-api-token file which contains api token
 
-Create **deploybot.eye** config using **deploybot.eye.sample** as sample
+Create **config/deploybot.eye** config using **config/deploybot.eye.sample** as sample
 
 If deploybot.eye config was changed than:
 
-    eye l deploybot.eye
+    eye l config/deploybot.eye
 
 Restart bot with command:
 
-    eye r deploybot
+    eye r config/deploybot
 
 Info for bot process:
 
-    eye i deploybot
+    eye i config/deploybot
 
 ## TODO
 
-1. Configuration (apps, envs, default branch, deploy command)
-2. Notification to some general channel about starting/ending/failing deploy events
+~~1. Configuration (apps, envs, default branch, deploy command)~~
+2. Notifications to channel about starting/ending/failing deploy events
 3. Specs

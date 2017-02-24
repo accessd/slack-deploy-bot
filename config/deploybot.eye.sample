@@ -1,9 +1,9 @@
 BUNDLE = 'bundle'
-BASE_PATH = '/var/www'
+BASE_PATH = '/path/to/deploy-bot'
 ROOT = File.expand_path(File.join(File.dirname(__FILE__)))
 api_token_file = '.slack-api-token'
 api_token_file_path = "#{ROOT}/#{api_token_file}"
-fail "#{api_token_file_path} does not exists" unless File.exist?(api_token_file_path)
+fail "#{api_token_file_path} does not exist" unless File.exist?(api_token_file_path)
 SLACK_API_TOKEN = File.read(api_token_file_path).gsub(/\n/, '')
 
 Eye.config do
