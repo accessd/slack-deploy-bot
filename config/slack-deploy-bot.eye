@@ -1,0 +1,34 @@
+BUNDLE = 'bundle'
+BASE_PATH = '/var/www'
+ROOT = File.expand_path(File.join(File.dirname(__FILE__)))
+api_token_file = '.slack-api-token'
+api_token_file_path = "#{ROOT}/#{api_token_file}"
+fail "#{api_token_file_path} does not exists" unless File.exist?(api_token_file_path)
+SLACK_API_TOKEN = File.read(api_token_file_path).gsub(/\n/, '')
+
+Eye.config do
+  logger "#{ROOT}/logs/eye.log"
+end
+
+Eye.application :deploybot do
+  env 'BASE_PATH' => BASE_PATH
+  env 'SLACK_API_TOKEN' => SLACK_API_TOKEN
+  working_dir ROOT
+  trigger :flapping, times: 10, within: 1.minute, retry_in: 10.minutes
+
+  process :bot do
+    daemonize true
+    pid_file 'bot.pid'
+    stdall "#{ROOT}/logs/deploybot.log"
+
+    start_command "#{BUNDLE} exec ruby run.rb"
+    stop_signals [:TERM, 5.seconds, :KILL]
+    restart_command 'kill -USR2 {PID}'
+
+    # just sleep this until process get up status
+    restart_grace 2.seconds
+
+    check :cpu, every: 30, below: 80, times: 3
+    check :memory, every: 30, below: 100.megabytes, times: [3, 5]
+  end
+end

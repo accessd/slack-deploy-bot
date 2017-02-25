@@ -1,1 +1,1 @@
-console: bundle exec ruby deploybot.rb
+bot: bundle exec ruby run.rb

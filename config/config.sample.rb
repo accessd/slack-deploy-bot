@@ -1,4 +1,4 @@
-DeployBot.setup do |config|
+SlackDeployBot.setup do |config|
   config.apps = {
     :'my-awesome-app' => {
       envs: [:staging, :prod],
@@ -9,7 +9,7 @@ DeployBot.setup do |config|
     :'my-second-awesome-app' => {
       envs: [:dev, :prod],
       path: '~/projects/my-second-awesome-app',
-      deploy_cmd: ->(env, branch) { "./deploy.sh #{env} #{branch}" }
+      deploy_cmd: ->(env, branch) { "BRANCH_NAME=#{branch} bundle exec cap #{env} deploy" }
     }
   }
 end

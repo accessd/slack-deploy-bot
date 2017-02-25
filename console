@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require_relative 'config/boot'
+require_relative 'slack-deploy-bot'
 require 'pry'
 pry

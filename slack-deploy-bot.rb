@@ -1,0 +1,6 @@
+require_relative 'config/boot'
+require_relative 'slack-deploy-bot/utils'
+require_relative 'slack-deploy-bot/version'
+require_relative 'slack-deploy-bot/about'
+require_relative 'slack-deploy-bot/commands'
+require_relative 'slack-deploy-bot/bot'
