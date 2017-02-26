@@ -10,4 +10,8 @@ module SlackDeployBot
   end
 end
 
-require_relative 'config'
+SlackDeployBot.apps = {}
+
+unless ENV['ENV'] == 'test'
+  require_relative 'config'
+end
