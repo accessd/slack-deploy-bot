@@ -33,11 +33,48 @@ in case of deploy fail you'll see the error message:
 
 ![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-failed.png)
 
+## Production
+
+### How to setup
+
+1. Clone the repo
+2. `cp ./config/config.sample.rb ./config/config.rb`
+3. Edit `./config/config.rb` to add configuration for your app
+4. `bundle install --without development test`
+5. You can try to launch bot with `SLACK_API_TOKEN=xxx bundle exec ruby run.rb` and test it
+6. Launch bot as a daemon (you can use *eye, upstart, systemd*, etc.)
+
+I'd recommend to use **eye** gem for launching bot. But it's up to you.
+
+### Launching with eye
+
+Please follow instruction on [[https://github.com/kostya/eye]] for installing **eye**
+
+Put in the root *.slack-api-token* file which contains api token
+
+Create **config/slack-deploy-bot.eye** config using **config/slack-deploy-bot.eye.sample** as sample
+
+Start bot:
+
+    eye s config/slack-deploy-bot.eye
+
+If slack-deploy-bot.eye config was changed than:
+
+    eye l config/slack-deploy-bot.eye
+
+Restart bot with command:
+
+    eye r config/slack-deploy-bot.eye
+
+Info about bot process:
+
+    eye i config/slack-deploy-bot.eye
+
 ## Configuration
 
 Copy *config/config.sample.rb* to *config/config.rb*
 
-Example:
+Example of `config.rb`:
 
 ```ruby
 DeployBot.setup do |config|
@@ -78,43 +115,6 @@ Before starting specs please run:
     git submodule update --init
 
 for fetching *spec/support/dummy_app*
-
-## Production
-
-### How to setup
-
-1. Clone the repo
-2. `cp ./config/config.sample.rb ./config/config.rb`
-3. Edit `./config/config.rb` and add configuration for your app
-4. `bundle install --without development test`
-5. You can try to launch bot with `SLACK_API_TOKEN=xxx bundle exec ruby run.rb` and test it
-6. Launch bot as a daemon (you can use *eye, upstart, systemd*, etc.)
-
-I'd recommend to use **eye** gem for launching bot. But it's up to you.
-
-### Launching with eye
-
-Please follow instruction on [[https://github.com/kostya/eye]] for installing **eye**
-
-Put in the root *.slack-api-token* file which contains api token
-
-Create **config/slack-deploy-bot.eye** config using **config/slack-deploy-bot.eye.sample** as sample
-
-Start bot:
-
-    eye s config/slack-deploy-bot.eye
-
-If slack-deploy-bot.eye config was changed than:
-
-    eye l config/slack-deploy-bot.eye
-
-Restart bot with command:
-
-    eye r config/slack-deploy-bot.eye
-
-Info about bot process:
-
-    eye i config/slack-deploy-bot.eye
 
 ## TODO
 
