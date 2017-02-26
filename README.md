@@ -54,21 +54,21 @@ Put in the root *.slack-api-token* file which contains api token
 
 Create **config/slack-deploy-bot.eye** config using **config/slack-deploy-bot.eye.sample** as sample
 
+For first time or if slack-deploy-bot.eye config was changed than run:
+
+    eye load config/slack-deploy-bot.eye
+
 Start bot:
 
-    eye s config/slack-deploy-bot.eye
-
-If slack-deploy-bot.eye config was changed than:
-
-    eye l config/slack-deploy-bot.eye
+    eye start slack-deploy-bot
 
 Restart bot with command:
 
-    eye r config/slack-deploy-bot.eye
+    eye r slack-deploy-bot
 
 Info about bot process:
 
-    eye i config/slack-deploy-bot.eye
+    eye i slack-deploy-bot
 
 ## Configuration
 
