@@ -60,15 +60,15 @@ For first time or if slack-deploy-bot.eye config was changed than run:
 
 Start bot:
 
-    eye start slack-deploy-bot
+    eye start deploybot
 
 Restart bot with command:
 
-    eye r slack-deploy-bot
+    eye r deploybot
 
 Info about bot process:
 
-    eye i slack-deploy-bot
+    eye i deploybot
 
 ## Configuration
 
