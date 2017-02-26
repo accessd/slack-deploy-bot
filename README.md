@@ -81,6 +81,15 @@ for fetching *spec/support/dummy_app*
 
 ## Production
 
+### How to setup
+
+1. Clone the repo
+2. `cp ./config/config.sample.rb ./config/config.rb`
+3. Edit `./config/config.rb` and add configuration for your app
+4. `bundle install --without development test`
+5. You can try to launch bot with `SLACK_API_TOKEN=xxx bundle exec ruby run.rb` and test it
+6. Launch bot as a daemon (you can use *eye, upstart, systemd*, etc.)
+
 I'd recommend to use **eye** gem for launching bot. But it's up to you.
 
 ### Launching with eye
