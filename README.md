@@ -1,6 +1,6 @@
 # Slack Deploy Bot
 
-Slack bot that helps you deploy your apps.
+Slack bot that helps you to deploy your apps.
 
 ## What it can do?
 
@@ -8,23 +8,26 @@ For help just type **help**:
 
 ![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/help-command.png)
 
-Show changelog for your branch against master branch:
+
+Show **changelog** for your branch against *master* branch:
 
     changelog my-awesome-app#feature
 
 ![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/changelog-command.png)
 
-Deploy your apps to different environments:
+
+**Deploy** your apps to different environments:
 
     deploy my-awesome-app to prod
-
-![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-command.png)
 
 or specific branch:
 
     deploy my-awesome-app#feature to staging
 
-in case of deploy failed you'll see error message:
+![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-command.png)
+
+
+in case of deploy fail you'll see the error message:
 
 ![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-failed.png)
 
@@ -54,36 +57,56 @@ end
 
 Required options for each app: *envs*, *path*, *deploy_cmd*
 
-## Development
+## Development && Testing
 
 Start bot with command:
 
-    SLACK_API_TOKEN=xxx bundle exec ruby deploybot.rb
+    SLACK_API_TOKEN=xxx foreman start
 
 Start console with:
 
     bundle exec ./console
 
+Run specs with:
+
+    bundle exec rspec
+
+Before starting specs please run:
+
+    git submodule update --init
+
+for fetching *spec/support/dummy_app*
+
 ## Production
 
-Put in root .slack-api-token file which contains api token
+I'd recommend to use **eye** gem for launching bot. But it's up to you.
 
-Create **config/deploybot.eye** config using **config/deploybot.eye.sample** as sample
+### Launching with eye
 
-If deploybot.eye config was changed than:
+Please follow instruction on [[https://github.com/kostya/eye]] for installing **eye**
 
-    eye l config/deploybot.eye
+Put in the root *.slack-api-token* file which contains api token
+
+Create **config/slack-deploy-bot.eye** config using **config/slack-deploy-bot.eye.sample** as sample
+
+Start bot:
+
+    eye s config/slack-deploy-bot.eye
+
+If slack-deploy-bot.eye config was changed than:
+
+    eye l config/slack-deploy-bot.eye
 
 Restart bot with command:
 
-    eye r config/deploybot
+    eye r config/slack-deploy-bot.eye
 
-Info for bot process:
+Info about bot process:
 
-    eye i config/deploybot
+    eye i config/slack-deploy-bot.eye
 
 ## TODO
 
 1. ~~Configuration (apps, envs, default branch, deploy command)~~
 2. ~~Notifications to channel about starting/ending/failing deploy events~~
-3. Specs
+3. ~~Specs~~

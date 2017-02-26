@@ -21,7 +21,7 @@ Eye.application :deploybot do
     pid_file 'bot.pid'
     stdall "#{ROOT}/logs/deploybot.log"
 
-    start_command "#{BUNDLE} exec ruby deploybot.rb"
+    start_command "#{BUNDLE} exec ruby run.rb"
     stop_signals [:TERM, 5.seconds, :KILL]
     restart_command 'kill -USR2 {PID}'
 

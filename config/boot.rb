@@ -1,7 +1,6 @@
 require 'slack-ruby-bot'
-require_relative '../helpers'
 
-module DeployBot
+module SlackDeployBot
   class << self
     attr_accessor :apps
   end
