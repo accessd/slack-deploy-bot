@@ -10,7 +10,7 @@ Eye.config do
   logger "#{ROOT}/logs/eye.log"
 end
 
-Eye.application :slack-deploy-bot do
+Eye.application :deploybot do
   env 'BASE_PATH' => BASE_PATH
   env 'SLACK_API_TOKEN' => SLACK_API_TOKEN
   working_dir ROOT
