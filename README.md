@@ -96,7 +96,7 @@ end
 
 Required options for each app: *envs*, *path*, *deploy_cmd*
 
-## Development && Testing
+## Development & Testing
 
 Start bot with command:
 
