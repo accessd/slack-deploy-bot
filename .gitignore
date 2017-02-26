@@ -1,5 +1,5 @@
 .slack-api-token
 *.log
 logs
-config/deploybot.eye
+config/slack-deploy-bot.eye
 config/config.rb
