@@ -69,7 +69,7 @@ Start console with:
 
 Run specs with:
 
-    bundle exec rspec
+    bundle exec rake
 
 Before starting specs please run:
 

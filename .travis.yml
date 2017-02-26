@@ -1,0 +1,8 @@
+language: ruby
+
+cache: bundler
+
+matrix:
+  include:
+    - rvm: 2.3.0
+    - rvm: ruby-head
