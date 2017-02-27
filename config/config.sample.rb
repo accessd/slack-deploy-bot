@@ -4,6 +4,7 @@ SlackDeployBot.setup do |config|
       envs: [:staging, :prod],
       path: '~/projects/my-awesome-app',
       default_branch: :master,
+      default_env: :prod,
       deploy_cmd: ->(env, branch) { "./deploy.sh #{env} #{branch}" }
     },
     :'my-second-awesome-app' => {

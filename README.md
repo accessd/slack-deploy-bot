@@ -18,13 +18,13 @@ Show **changelog** for your branch against *master* branch:
 ![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/changelog-command.png)
 
 
-**Deploy** your apps to different environments:
+**Deploy** your apps branches to different environments:
 
-    deploy my-awesome-app to prod
+    deploy my-awesome-app # deploy my-awesome-app default branch to default environment
 
-or specific branch:
+    deploy my-awesome-app to prod # deploy my-awesome-app default branch to prod environment
 
-    deploy my-awesome-app#feature to staging
+    deploy my-awesome-app#my-feature to staging # deploy my-awesome-app my-feature branch to prod environment
 
 ![ScreenShot](https://raw.github.com/accessd/slack-deploy-bot/master/images/deploy-command.png)
 
@@ -82,7 +82,8 @@ DeployBot.setup do |config|
     :'my-awesome-app' => {
       envs: [:staging, :prod],
       path: '~/projects/my-awesome-app',
-      default_branch: :master, # default branch to deploy
+      default_branch: :master, # default branch to deploy, is not required
+      default_env: :prod, # default env to deploy, is not required
       deploy_cmd: ->(env, branch) { "./deploy.sh #{env} #{branch}" } # deploy with Ansible for example
     },
     :'my-second-awesome-app': {
