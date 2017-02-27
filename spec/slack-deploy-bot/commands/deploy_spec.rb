@@ -21,9 +21,29 @@ describe SlackDeployBot::Commands::Deploy, vcr: { cassette_name: 'rtm_start' } d
     ])
   end
 
+  describe 'without env' do
+    it 'use default env' do
+      expect(message: 'deploy-bot deploy my-awesome-app#my-feature').
+        to respond_with_slack_message(messages: [
+          'broskoski started deploying my-awesome-app#my-feature to prod',
+          'broskoski finished deploying my-awesome-app#my-feature to prod',
+      ])
+
+      say_to_bot(message: 'deploy-bot deploy my-awesome-app#my-feature')
+      expect_deploy_cmd_has_been_executed
+    end
+
+    it 'default env is not set' do
+      expect(message: 'deploy-bot deploy my-second-awesome-app#my-feature').
+        to respond_with_slack_message(messages: [
+          ":warning: There's no default env"
+      ])
+    end
+  end
+
   describe 'say error' do
     it 'when error happened' do
-    expect(message: 'deploy-bot deploy my-second-awesome-app#my-feature to prod').
+      expect(message: 'deploy-bot deploy my-second-awesome-app#my-feature to prod').
         to respond_with_slack_message(messages: [":warning: Deploy failed with error: bundler: command not found: cap\n. More info at logs/deploybot.log"])
     end
 
@@ -39,7 +59,7 @@ describe SlackDeployBot::Commands::Deploy, vcr: { cassette_name: 'rtm_start' } d
   end
 
   it 'invalid command' do
-    expect(message: 'deploy-bot deploy my-awesome-app#').
+    expect(message: 'deploy-bot deploy').
       to respond_with_slack_message(messages: ["Sorry <@#{ENV['SLACK_USER_ID']}>, I don't understand that command!"])
   end
 
