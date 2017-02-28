@@ -1,24 +1,24 @@
 module SlackDeployBot
   def self.deploy_app(app_name:, branch: nil, env: nil, client:, data:)
     catch(:exit) do
-      SlackDeployBot.check_app_present_in_config(app_name, client, data)
-      app_config = SlackDeployBot.apps[app_name.to_sym]
+      check_app_present_in_config(app_name, client, data)
+      app_config = apps[app_name.to_sym]
 
       branch ||= app_config[:default_branch]
       branch ||= DEFAULT_BRANCH
       env ||= app_config[:default_env]
-      env || SlackDeployBot.say_error(client, data, "There's no default env")
+      env || say_error(client, data, "There's no default env")
 
       client.send(:logger).info "app: #{app_name}"
       client.send(:logger).info "branch: #{branch}"
       client.send(:logger).info "env: #{env}"
 
       envs = app_config[:envs].map(&:to_sym)
-      envs.include?(env.to_sym)  || SlackDeployBot.say_error(client, data, "Invalid env `#{env}`, use: #{envs.join(', ')}")
+      envs.include?(env.to_sym)  || say_error(client, data, "Invalid env `#{env}`, use: #{envs.join(', ')}")
       git = Utils::Git.new(app_config[:path])
-      git.fetch_branches         || SlackDeployBot.say_error(client, data, "Cannot fetch branches")
-      git.branch_exists?(branch) || SlackDeployBot.say_error(client, data, "Unknown git branch `#{branch}`")
-      git.sync_branch(branch)    || SlackDeployBot.say_error(client, data, "Couldn't pull `#{branch}`")
+      git.fetch_branches         || say_error(client, data, "Cannot fetch branches")
+      git.branch_exists?(branch) || say_error(client, data, "Unknown git branch `#{branch}`")
+      git.sync_branch(branch)    || say_error(client, data, "Couldn't pull `#{branch}`")
 
       git.checkout(branch)
       username = client.users[data.user][:name]
@@ -33,12 +33,12 @@ module SlackDeployBot
           client.send(:logger).info stdout
           if stdout =~ /failed\:/ || stdout =~ /command not found/
             error_happened = true
-            SlackDeployBot.say_error(client, data, "Deploy failed with error: #{stdout}. More info at logs/deploybot.log")
+            say_error(client, data, "Deploy failed with error: #{stdout}. More info at logs/deploybot.log")
           end
         elsif stderr && !stderr.empty?
           client.send(:logger).error stderr
           error_happened = true
-          SlackDeployBot.say_error(client, data, "Deploy failed with error: #{stderr}. More info at logs/deploybot.log")
+          say_error(client, data, "Deploy failed with error: #{stderr}. More info at logs/deploybot.log")
         end
       end
 

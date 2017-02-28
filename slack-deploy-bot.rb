@@ -1,3 +1,4 @@
+require_relative 'slack-deploy-bot/app_config_validator'
 require_relative 'config/boot'
 require_relative 'slack-deploy-bot/utils'
 require_relative 'slack-deploy-bot/version'
