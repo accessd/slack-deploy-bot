@@ -15,3 +15,7 @@ SlackDeployBot.apps = {}
 unless ENV['ENV'] == 'test'
   require_relative 'config'
 end
+
+SlackDeployBot.apps.each do |app_name, app_config|
+  SlackDeployBot::AppConfigValidator.validate(app_name, app_config)
+end

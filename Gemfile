@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'slack-ruby-bot'
 gem 'celluloid-io'
+gem 'dry-validation'
 
 group :development, :test do
   gem 'rake'
