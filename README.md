@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/accessd/slack-deploy-bot.svg?branch=master)](https://travis-ci.org/accessd/slack-deploy-bot)
 
-Slack bot that helps you to deploy your apps.
+A Slack bot that helps you to deploy your apps.
 
 ## What it can do?
 
