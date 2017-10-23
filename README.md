@@ -48,7 +48,7 @@ I'd recommend to use **eye** gem for launching bot. But it's up to you.
 
 ### Launching with eye
 
-Please follow instruction on [[https://github.com/kostya/eye]] for installing **eye**
+Please follow instruction on [https://github.com/kostya/eye](https://github.com/kostya/eye) for installing **eye**
 
 Put in the root *.slack-api-token* file which contains api token
 
